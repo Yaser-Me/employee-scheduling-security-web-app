@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/styles.css">
+
+<h1>Two Factor Code</h1>
+
+{{#if message}}
+<p>{{message}}</p>
+{{/if}}
+
+<form method="post" action="/twofactor">
+    <input type="hidden" name="username" value="{{username}}">
+
+    <p>
+        Code:<br>
+        <input type="text" name="code">
+    </p>
+
+    <button type="submit">Verify</button>
+</form>
