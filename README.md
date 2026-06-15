@@ -67,6 +67,3 @@ or:
 npm start
 ```
 
-## Important
-
-Do not upload real employee documents, `.env` files, or `node_modules/` to GitHub.
