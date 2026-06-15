@@ -1,6 +1,6 @@
 # Employee Scheduling Security Web App
 
-This project is the final version of a semester-long Web Technologies II employee scheduling system. It was refactored into a Node.js and Express web application using MongoDB, Handlebars, authentication, sessions, 2FA, security logging, and protected PDF uploads.
+This project is about employee scheduling system. It was refactored into a Node.js and Express web application using MongoDB, Handlebars, authentication, sessions, 2FA, security logging, and protected PDF uploads.
 
 ## Main Features
 
