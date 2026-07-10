@@ -1,53 +1,56 @@
 # Employee Scheduling Security Web App
 
-This project is about employee scheduling system. It was refactored into a Node.js and Express web application using MongoDB, Handlebars, authentication, sessions, 2FA, security logging, and protected PDF uploads.
+An academic Node.js web application for viewing employee schedules and practicing practical security controls around login, sessions, audit logging, and document uploads.
 
-## Main Features
+## What the project demonstrates
 
-- Employee scheduling web application
-- Node.js and Express backend
-- Handlebars views
-- MongoDB persistence layer
-- User login system
-- Session-based access control
-- Email-based 2FA simulation
-- Account lockout after repeated failed login attempts
-- Suspicious activity notification simulation
-- Protected employee PDF document uploads
+- Employee directory and schedule views
+- Employee detail editing with server-side validation
+- MongoDB persistence
+- Username/password login with a simulated email-based second factor
+- Database-backed sessions with rolling expiry
+- Failed-login tracking, suspicious-activity notification, and account lockout
+- Security access logging
+- Authenticated PDF document upload and download
 
-## Security Features
+## Technology
 
-- Routes protected by authentication middleware
-- 2FA code generated after successful username/password login
-- 2FA code expires after a limited time
-- Suspicious activity message after 3 failed login attempts
-- Account lockout after 10 failed login attempts
-- Uploaded documents are not served through a public static route
-- PDF-only upload restriction
-- Maximum upload size: 2MB
-- Maximum documents per employee: 5
+- Node.js and Express
+- Handlebars
+- MongoDB
+- Multer
+- HTML and CSS
 
-## Test Users
+## Security controls
 
-These accounts are for demo/testing only:
+- All application routes after the login flow require a valid session.
+- Two-factor codes expire after three minutes and are cleared after successful use.
+- Sessions expire after five minutes and are refreshed while active.
+- A suspicious-activity message is generated after three failed login attempts.
+- Accounts are locked after ten failed login attempts.
+- Uploaded files are limited to PDF MIME type, 2 MB per file, and five files per employee.
+- Uploaded documents are stored outside the public static directory.
+- Requests to protected routes are recorded in the `security_log` collection.
 
-```text
-username: user1
-password: pass123
+## Project structure
 
-username: user2
-password: hello123
-```
+| Path | Purpose |
+|---|---|
+| `app.js` | Express routes, authentication flow, views, and uploads |
+| `business.js` | Scheduling and security business rules |
+| `persistence.js` | MongoDB access |
+| `emailSystem.js` | Console-based email simulation |
+| `views/` | Handlebars templates |
+| `public/` | Static styles |
+| `employee_docs/` | Protected uploaded documents |
 
-## Development Notes
+## Run locally
 
-- The 2FA code is printed in the terminal because this is a demo email system.
-- Suspicious activity and account lockout messages are also printed in the terminal.
-- If a demo account is locked, it can be reset in the `users` collection by changing `locked` to `false` and `failedLogins` to `0`.
-- Uploaded employee documents are stored in `employee_docs/`.
-- This project is for academic learning and is not production-ready.
+Requirements:
 
-## Setup
+- A current Node.js LTS release
+- MongoDB running locally or through a test connection string
+- Test data in the `infs3201_winter2026` database
 
 Install dependencies:
 
@@ -55,15 +58,25 @@ Install dependencies:
 npm install
 ```
 
-Run the application:
+Set the MongoDB connection string.
 
-```bash
-node app.js
-```
+PowerShell:
 
-or:
-
-```bash
+```powershell
+$env:MONGO_URI="mongodb://127.0.0.1:27017"
 npm start
 ```
 
+Bash:
+
+```bash
+MONGO_URI="mongodb://127.0.0.1:27017" npm start
+```
+
+Open [http://localhost:8000](http://localhost:8000).
+
+The application expects `users`, `employees`, and `shifts` collections. Academic test data is not seeded automatically.
+
+## Important limitations
+
+This is a learning project, not a production-ready identity system. The email service prints messages to the terminal, and the current password hashing is a basic SHA-256 demonstration. A production version should use Argon2 or bcrypt, secure cookie settings, CSRF protection, secrets management, stronger upload validation, and a real email provider.
