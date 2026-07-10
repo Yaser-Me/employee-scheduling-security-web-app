@@ -53,8 +53,8 @@ app.engine("hbs", exphbs.engine({ extname: ".hbs", defaultLayout: false }));
 app.set("view engine", "hbs");
 
 // just point directly to the folders
-app.set("views", "a5_files/views");
-app.use(express.static("a5_files/public"));
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 
 
 
